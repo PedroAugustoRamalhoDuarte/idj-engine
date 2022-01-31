@@ -6,8 +6,9 @@
 
 State::State() {
     quitRequested = false;
-    bg = Sprite("../assets/img/cachorro-caramelo");
-    music = Music("../assets/audio/stageState.ogg");
+    bg = Sprite("./assets/img/cachorro-caramelo.png");
+    music = Music("./assets/audio/stageState.ogg");
+    music.play();
 }
 
 void State::loadAssets() {
@@ -22,7 +23,7 @@ void State::update(float dt) {
 
 void State::render() {
     // Render background
-    // bg.render(0, 0);
+    bg.render(100, 100);
 }
 
 bool State::getQuitRequested() {

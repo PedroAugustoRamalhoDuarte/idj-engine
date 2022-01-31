@@ -16,12 +16,18 @@ Game::Game(std::string title, int width, int height) {
     // TODO: handler error
     IMG_Init(IMG_INIT_JPG | IMG_INIT_PNG | IMG_INIT_TIF);
 
-    // Mix_Init();
+    Mix_Init(MIX_INIT_OGG);
     Mix_OpenAudio(MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024);
     Mix_AllocateChannels(DEFAULT_ALLOCATED_CHANNELS);
 
     window = SDL_CreateWindow(title.c_str(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, width, height, 0);
+    if (window == nullptr) {
+        std::cout << SDL_GetError() << std::endl;
+    }
     renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+    if (renderer == nullptr) {
+        std::cout << SDL_GetError() << std::endl;
+    }
 
     state = new State();
 }
@@ -53,7 +59,7 @@ SDL_Renderer *Game::getRenderer() {
 
 void Game::run() {
     while (!state->getQuitRequested()) {
-        state->update(33);
+        state->update('X');
         state->render();
         SDL_RenderPresent(renderer);
         SDL_Delay(33);
