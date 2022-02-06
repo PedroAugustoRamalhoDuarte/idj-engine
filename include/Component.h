@@ -2,13 +2,14 @@
 #define IDJ_ENGINE_COMPONENT_H
 
 #include <iostream>
+#include "GameObject.h"
 
 class Component {
 protected:
-    // GameObject associated;
+    GameObject associated;
 
 public:
-    // Component(GameObject& associated);
+    Component(GameObject& associated);
     virtual ~Component();
     virtual void update(float dt);
     virtual void render();
