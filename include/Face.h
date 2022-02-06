@@ -10,7 +10,7 @@ private:
 
 public:
 
-    Face(GameObject &associated);
+    explicit Face(GameObject &associated);
 
     void damage(int damage);
 
@@ -19,6 +19,8 @@ public:
     void render() override;
 
     bool is(std::string type) override;
+
+    int getHitpoints() const;
 };
 
 #endif //IDJ_ENGINE_FACE_H

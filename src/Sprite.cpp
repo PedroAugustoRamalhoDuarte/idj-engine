@@ -16,12 +16,11 @@ Sprite::Sprite(GameObject &associated, std::string file) : Component(associated)
     associated.box.h = height;
 }
 
-// TODO: Error with this destructor
 Sprite::~Sprite() {
-//    if (texture != nullptr) {
-//        SDL_DestroyTexture(texture);
-//        texture = nullptr;
-//    }
+    if (texture != nullptr) {
+        SDL_DestroyTexture(texture);
+        texture = nullptr;
+    }
 }
 
 void Sprite::open(std::string file) {

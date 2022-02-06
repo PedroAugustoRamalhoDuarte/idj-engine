@@ -6,9 +6,7 @@ GameObject::GameObject() {
 }
 
 GameObject::~GameObject() {
-    for (auto &cpt: components) {
-        // delete (cpt.get());
-    }
+    components.clear();
 }
 
 void GameObject::update(float dt) {
@@ -32,8 +30,7 @@ void GameObject::requestDelete() {
 }
 
 void GameObject::addComponent(Component *cpt) {
-    // std::unique_ptr<Component> temp(cpt);
-    // components.push_back(temp);
+    components.emplace_back(cpt);
 }
 
 // TODO: Build this function
@@ -42,10 +39,12 @@ void GameObject::removeComponent(Component *cpt) {
 }
 
 Component *GameObject::getComponent(std::string type) {
+    Component *temp = nullptr;
     for (auto &cpt: components) {
         if (cpt->is(type)) {
-            return cpt.get();
+            temp = cpt.get();
+            // Why breaks bug the function
         }
     }
-    return nullptr;
+    return temp;
 }

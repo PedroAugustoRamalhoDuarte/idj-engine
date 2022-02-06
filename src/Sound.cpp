@@ -9,9 +9,9 @@ Sound::Sound(GameObject &associated, std::string file) : Sound(associated) {
 }
 
 Sound::~Sound() {
-    if (chunk) {
-        Mix_FreeChunk(chunk);
-    }
+//    if (chunk) {
+//        Mix_FreeChunk(chunk);
+//    }
 }
 
 void Sound::play(int times) {
@@ -26,7 +26,12 @@ void Sound::stop() {
 
 void Sound::open(std::string file) {
     // TODO: Handle error
-    chunk = Mix_LoadWAV(file.c_str());
+    Mix_Chunk *musicChunk = Mix_LoadWAV(file.c_str());
+    if (musicChunk != nullptr) {
+        chunk = musicChunk;
+    } else {
+        std::cout << "Error ao importar música" << std::endl;
+    }
 }
 
 bool Sound::isOpen() {

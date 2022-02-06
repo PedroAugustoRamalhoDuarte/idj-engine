@@ -15,10 +15,11 @@ class GameObject;
 
 class GameObject {
 private:
-    std::vector<std::unique_ptr<Component>> components;
+
     bool isDead;
 
 public:
+    std::vector<std::unique_ptr<Component>> components; // DEBUG MOVE TO PRIVATE
 
     GameObject();
 

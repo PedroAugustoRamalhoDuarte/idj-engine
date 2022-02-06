@@ -9,7 +9,7 @@ State::State() {
 //    bg = new Sprite(gameObject, "./assets/img/cachorro-caramelo.png");
     quitRequested = false;
     music = Music("./assets/audio/stageState.ogg");
-    music.play();
+    // music.play();
 }
 
 void State::loadAssets() {
@@ -18,10 +18,11 @@ void State::loadAssets() {
 
 void State::update(float dt) {
     input();
-    for (long i; i < objectArray.size(); i++) {
+    for (long i = 0; i < objectArray.size(); i++) {
         objectArray[i]->update(dt);
         if (objectArray[i]->getIsDead()) {
             objectArray.erase(objectArray.begin() + i);
+            std::cout << objectArray.size() << std::endl;
         }
     }
     if (SDL_QuitRequested()) {
@@ -30,7 +31,7 @@ void State::update(float dt) {
 }
 
 void State::render() {
-    for (long i; i < objectArray.size(); i++) {
+    for (long i = 0; i < objectArray.size(); i++) {
         objectArray[i]->render();
     }
     // Render background
@@ -42,7 +43,7 @@ bool State::getQuitRequested() {
 }
 
 State::~State() {
-    objectArray.clear();
+    // objectArray.clear();
 }
 
 void State::input() {
@@ -63,6 +64,7 @@ void State::input() {
         // Se o evento for clique...
         if (event.type == SDL_MOUSEBUTTONDOWN) {
 
+            std::cout << mouseX << "," << mouseY << std::endl;
             // Percorrer de trás pra frente pra sempre clicar no objeto mais de cima
             for (int i = objectArray.size() - 1; i >= 0; --i) {
                 // Obtem o ponteiro e casta pra Face.
@@ -99,15 +101,21 @@ void State::input() {
 }
 
 void State::addObject(int mouseX, int mouseY) {
-    GameObject gameObject;
-    Sprite sprite(gameObject, "./assets/img/penguinface.png");
-    // Maybe needs setClip
-    gameObject.addComponent(&sprite);
+    auto gameObject = new GameObject();
+    gameObject->box.x = mouseX;
+    gameObject->box.y = mouseY;
 
-    Sound sound(gameObject, "./assets/audio/boom.wav");
-    Face face(gameObject);
-    gameObject.addComponent(&sound);
-    gameObject.addComponent(&face);
+    // Adds Sprite
+    auto sprite = new Sprite(*gameObject, "./assets/img/penguinface.png");
+    gameObject->addComponent(sprite);
 
-    objectArray.emplace_back(&gameObject);
+    // Adds Sound
+    auto sound = new Sound(*gameObject, "./assets/audio/boom.wav");
+    gameObject->addComponent(sound);
+
+    // Adds Face
+    auto face = new Face(*gameObject);
+    gameObject->addComponent(face);
+
+    objectArray.emplace_back(gameObject);
 }

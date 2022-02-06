@@ -62,6 +62,7 @@ void Game::run() {
         state->update('X');
         state->render();
         SDL_RenderPresent(renderer);
+        SDL_RenderClear(renderer);
         SDL_Delay(33);
     }
 }
