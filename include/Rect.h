@@ -6,8 +6,10 @@
 #define IDJ_ENGINE_RECT_H
 
 class Rect {
-private:
+public:
     float x, y, w, h;
+
+    bool contains(float x, float y);
 };
 
 #endif //IDJ_ENGINE_RECT_H
