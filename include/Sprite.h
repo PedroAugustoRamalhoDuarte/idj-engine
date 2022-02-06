@@ -5,10 +5,13 @@
 #define INCLUDE_SDL_IMAGE
 
 #include "../lib/SDL_include.h"
+#include "Component.h"
 #include <iostream>
 // #include "Game.h"
 
-class Sprite {
+// TODO: 2.1 A Sprite na verdade é um componente!
+
+class Sprite : public Component {
 private:
     SDL_Texture *texture;
     int width;
