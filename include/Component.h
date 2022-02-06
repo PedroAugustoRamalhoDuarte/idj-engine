@@ -10,7 +10,7 @@ protected:
 public:
     // Component(GameObject& associated);
     virtual ~Component();
-    virtual void update();
+    virtual void update(float dt);
     virtual void render();
     virtual bool is(std::string type);
 };
