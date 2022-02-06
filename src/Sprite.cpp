@@ -3,13 +3,17 @@
 #include <utility>
 #include "Game.h"
 
-Sprite::Sprite() {
+Sprite::Sprite(GameObject &associated) : Component(associated) {
     texture = nullptr;
 }
 
-Sprite::Sprite(std::string file) {
+Sprite::Sprite(GameObject &associated, std::string file) : Component(associated) {
     texture = nullptr;
     open(std::move(file));
+
+    // Changes associated object
+    associated.box.w = width;
+    associated.box.h = height;
 }
 
 // TODO: Error with this destructor
@@ -46,8 +50,8 @@ void Sprite::setClip(int x, int y, int w, int h) {
     clipRect.h = h;
 }
 
-void Sprite::render(int x, int y) {
-    SDL_Rect dstrect = {.x = x, .y = y, .w = clipRect.w, .h = clipRect.h};
+void Sprite::render() {
+    SDL_Rect dstrect = {.x = static_cast<int>(associated.box.x), .y = static_cast<int>(associated.box.y), .w = clipRect.w, .h = clipRect.h};
     if (SDL_RenderCopy(Game::getInstance().getRenderer(), texture, &clipRect, &dstrect)) {
         std::cout << SDL_GetError() << std::endl;
     }
@@ -63,5 +67,12 @@ int Sprite::getWidth() {
 
 bool Sprite::isOpen() {
     return texture != nullptr;
+}
+
+void Sprite::update(float dt) {}
+
+
+bool Sprite::is(std::string type) {
+    return type == "Sprite";
 }
 

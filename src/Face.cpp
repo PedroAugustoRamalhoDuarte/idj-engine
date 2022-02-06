@@ -1,4 +1,5 @@
 #include "Face.h"
+#include "Sound.h"
 
 Face::Face(GameObject &associated) : Component(associated) {
     hitpoints = DEFAULT_HP;
@@ -9,9 +10,10 @@ void Face::damage(int damage) {
     if (hitpoints <= 0) {
         associated.requestDelete();
         // Play sound if exist
-        auto sound = associated.getComponent("Sound");
-        if (sound) {
-            sound.associated.play()
+        Component* soundComponent = associated.getComponent("Sound");
+        if (soundComponent) {
+            auto* sound = dynamic_cast<Sound *>(soundComponent);
+            sound->play();
         }
     }
 }

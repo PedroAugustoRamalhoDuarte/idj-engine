@@ -1,17 +1,24 @@
 #ifndef IDJ_ENGINE_STATE_H
 #define IDJ_ENGINE_STATE_H
 
+#include <memory>
 #include "Sprite.h"
 #include "Music.h"
+#include "Face.h"
+#include "Vec2.h"
+#include "Sound.h"
 
 class State {
 private:
     Music music;
-    Sprite bg;
+    // Sprite bg;
     bool quitRequested;
+    std::vector<std::unique_ptr<GameObject>> objectArray;
 
 public:
     State();
+
+    ~State();
 
     bool getQuitRequested();
 
@@ -20,6 +27,10 @@ public:
     void update(float dt);
 
     void render();
+
+    void input();
+
+    void addObject(int mouseX, int mouseY);
 };
 
 

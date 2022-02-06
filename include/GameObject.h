@@ -5,14 +5,17 @@
 #ifndef IDJ_ENGINE_GAMEOBJECT_H
 #define IDJ_ENGINE_GAMEOBJECT_H
 
+class GameObject;
+
 #include <vector>
 #include <iostream>
+#include <memory>
 #include "Component.h"
 #include "Rect.h"
 
 class GameObject {
 private:
-    std::vector<Component *> components;
+    std::vector<std::unique_ptr<Component>> components;
     bool isDead;
 
 public:

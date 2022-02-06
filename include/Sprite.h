@@ -18,9 +18,9 @@ private:
     int height;
     SDL_Rect clipRect;
 public:
-    Sprite();
+    Sprite(GameObject &associated);
 
-    Sprite(std::string file);
+    Sprite(GameObject &associated, std::string file);
 
     ~Sprite();
 
@@ -28,13 +28,17 @@ public:
 
     void setClip(int x, int y, int w, int h);
 
-    void render(int x, int y);
+    void render() override;
 
     int getWidth();
 
     int getHeight();
 
     bool isOpen();
+
+    void update(float dt) override;
+
+    bool is(std::string type) override;
 };
 
 

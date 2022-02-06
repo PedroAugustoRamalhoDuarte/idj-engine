@@ -18,7 +18,7 @@ private:
     int channel;
 
 public:
-    Sound(GameObject& associated);
+    explicit Sound(GameObject& associated);
 
     Sound(GameObject& associated, std::string file);
 
