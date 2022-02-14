@@ -49,11 +49,16 @@ void Sprite::setClip(int x, int y, int w, int h) {
     clipRect.h = h;
 }
 
-void Sprite::render() {
-    SDL_Rect dstrect = {.x = static_cast<int>(associated.box.x), .y = static_cast<int>(associated.box.y), .w = clipRect.w, .h = clipRect.h};
+void Sprite::render(int x, int y) {
+    SDL_Rect dstrect = {.x = x, .y = y, .w = clipRect.w, .h = clipRect.h};
     if (SDL_RenderCopy(Game::getInstance().getRenderer(), texture, &clipRect, &dstrect)) {
         std::cout << SDL_GetError() << std::endl;
     }
+}
+
+
+void Sprite::render() {
+    render(static_cast<int>(associated.box.x), static_cast<int>(associated.box.y));
 }
 
 int Sprite::getHeight() {

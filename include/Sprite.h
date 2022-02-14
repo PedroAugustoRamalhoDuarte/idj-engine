@@ -30,6 +30,8 @@ public:
 
     void render() override;
 
+    void render(int x, int y);
+
     int getWidth();
 
     int getHeight();
