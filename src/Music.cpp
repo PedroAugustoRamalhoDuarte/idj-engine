@@ -3,6 +3,7 @@
 //
 
 #include "../include/Music.h"
+#include "Resources.h"
 
 #include <utility>
 
@@ -28,12 +29,7 @@ void Music::stop(int msToStop) {
 }
 
 void Music::open(std::string file) {
-    Mix_Music *loadedMusic = Mix_LoadMUS(file.c_str());
-    if (loadedMusic != nullptr) {
-        music = loadedMusic;
-    } else {
-        std::cout << "Error ao importar música" << std::endl;
-    }
+    music = Resources::getMusic(file);
 }
 
 bool Music::isOpen() {

@@ -52,10 +52,9 @@ Mix_Music *Resources::getMusic(std::string file) {
 
 void Resources::clearMusics() {
     for (auto music: musicTable) {
-        free(music.second);
+        Mix_FreeMusic(music.second);
     }
     musicTable.clear();
-
 }
 
 Mix_Chunk *Resources::getSound(std::string file) {
@@ -77,8 +76,7 @@ Mix_Chunk *Resources::getSound(std::string file) {
 
 void Resources::clearSounds() {
     for (auto sound: soundTable) {
-        free(sound.second);
+        Mix_FreeChunk(sound.second);
     }
     soundTable.clear();
-
 }
