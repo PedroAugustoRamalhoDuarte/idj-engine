@@ -10,6 +10,13 @@ State::State() {
     quitRequested = false;
     music = Music("./assets/audio/stageState.ogg");
     // music.play();
+
+    auto gameObject = new GameObject();
+    gameObject->box.x = 0;
+    gameObject->box.y = 0;
+    auto tileSet = new TileSet(64, 64, "./assets/img/tileset.png");
+    auto tileMap = new TileMap(*gameObject, "./assets/map/tileMap.txt", tileSet);
+
 }
 
 void State::loadAssets() {

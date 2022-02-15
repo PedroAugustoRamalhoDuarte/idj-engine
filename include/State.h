@@ -7,6 +7,7 @@
 #include "Face.h"
 #include "Vec2.h"
 #include "Sound.h"
+#include "TileMap.h"
 
 class State {
 private:
