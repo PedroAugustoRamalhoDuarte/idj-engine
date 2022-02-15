@@ -7,9 +7,6 @@
 #include "../lib/SDL_include.h"
 #include "Component.h"
 #include <iostream>
-// #include "Game.h"
-
-// TODO: 2.1 A Sprite na verdade é um componente!
 
 class Sprite : public Component {
 private:
@@ -18,7 +15,7 @@ private:
     int height;
     SDL_Rect clipRect;
 public:
-    Sprite(GameObject &associated);
+    explicit Sprite(GameObject &associated);
 
     Sprite(GameObject &associated, std::string file);
 
