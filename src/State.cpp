@@ -9,7 +9,7 @@ State::State() {
 //    bg = new Sprite(gameObject, "./assets/img/cachorro-caramelo.png");
     quitRequested = false;
     music = Music("./assets/audio/stageState.ogg");
-    // music.play();
+    music.play();
 
     auto gameObject = new GameObject();
     gameObject->box.x = 0;

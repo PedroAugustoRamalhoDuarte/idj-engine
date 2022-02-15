@@ -1,4 +1,5 @@
 #include "../include/Game.h"
+#include "Resources.h"
 
 Game *Game::instance = nullptr;
 
@@ -65,6 +66,10 @@ void Game::run() {
         SDL_RenderClear(renderer);
         SDL_Delay(33);
     }
+
+    Resources::clearImages();
+    Resources::clearSounds();
+    Resources::clearSounds();
 }
 
 State &Game::getState() {

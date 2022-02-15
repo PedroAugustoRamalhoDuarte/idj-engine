@@ -10,9 +10,9 @@ Sound::Sound(GameObject &associated, std::string file) : Sound(associated) {
 }
 
 Sound::~Sound() {
-    if (chunk) {
-        Mix_FreeChunk(chunk);
-    }
+//    if (chunk) {
+//        Mix_FreeChunk(chunk);
+//    }
 }
 
 void Sound::play(int times) {
