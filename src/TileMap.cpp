@@ -10,8 +10,25 @@ void TileMap::update(float dt) {
 }
 
 void TileMap::render() {
+    for (auto z = 0; z < mapDepth; ++z) {
+        renderLayer(z, 0, 0);
+    }
+}
+
+void TileMap::renderLayer(int layer, int cameraX, int cameraY) {
+    // TODO CameraX
+    auto cont = 0;
+    for (auto x = 0; x < mapWidth; x++) {
+        for (auto y = 0; y < mapHeight; y++) {
+            tileSet->renderTile(tileMatrix[cont + (layer * (mapWidth * mapHeight))],
+                                x * tileSet->getTileWidth() + associated.box.x,
+                                y * tileSet->getTileHeight() + associated.box.y);
+            cont++;
+        }
+    }
 
 }
+
 
 bool TileMap::is(std::string type) {
     return false;
@@ -22,8 +39,8 @@ TileMap::TileMap(GameObject &associated) : Component(associated) {
 }
 
 TileMap::TileMap(GameObject &associated, std::string file, TileSet *tileSet) : TileMap(associated) {
+    this->tileSet = tileSet;
     load(file);
-    tileSet = tileSet;
 }
 
 std::vector<std::string> split(std::string line, std::string del = " ") {
@@ -62,7 +79,6 @@ void TileMap::load(std::string file) {
                 if (!line_splited.empty()) {
                     tileMatrix.push_back(std::stoi(line_splited) - 1);
                 }
-
             }
         }
     }
@@ -90,11 +106,5 @@ void TileMap::setTileSet(TileSet *tileSet) {
 }
 
 int &TileMap::at(int x, int y, int z) {
-    return tileMatrix[z * (mapWidth * mapHeight) + x + y * mapWidth];;
+    return tileMatrix[z * (mapWidth * mapHeight) + x + y * mapWidth];
 }
-
-void TileMap::renderLayout(int layer, int cameraX, int cameraY) {
-    // TODO
-
-}
-

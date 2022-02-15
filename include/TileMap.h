@@ -40,7 +40,7 @@ public:
 
     bool is(std::string type) override;
 
-    void renderLayout(int layer, int cameraX = 0, int cameraY = 0);
+    void renderLayer(int layer, int cameraX = 0, int cameraY = 0);
 
     int getWidth();
 

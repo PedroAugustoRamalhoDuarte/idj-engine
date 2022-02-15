@@ -16,7 +16,8 @@ State::State() {
     gameObject->box.y = 0;
     auto tileSet = new TileSet(64, 64, "./assets/img/tileset.png");
     auto tileMap = new TileMap(*gameObject, "./assets/map/tileMap.txt", tileSet);
-
+    gameObject->addComponent(tileMap);
+    objectArray.emplace_back(gameObject);
 }
 
 void State::loadAssets() {
