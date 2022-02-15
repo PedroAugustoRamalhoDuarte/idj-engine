@@ -16,22 +16,22 @@
 
 class Resources {
 private:
-    std::unordered_map<std::string, SDL_Texture *> imageTable;
-    std::unordered_map<std::string, Mix_Music *> musicTable;
-    std::unordered_map<std::string, Mix_Chunk *> soundTable;
+    static std::unordered_map<std::string, SDL_Texture *> imageTable;
+    static std::unordered_map<std::string, Mix_Music *> musicTable;
+    static std::unordered_map<std::string, Mix_Chunk *> soundTable;
 
 public:
-    SDL_Texture *getImage(std::string file);
+    static SDL_Texture *getImage(std::string file);
 
-    void clearImages();
+    static void clearImages();
 
-    Mix_Music *getMusic(std::string file);
+    static Mix_Music *getMusic(std::string file);
 
-    void clearMusics();
+    static void clearMusics();
 
-    Mix_Chunk *getSound(std::string file);
+    static Mix_Chunk *getSound(std::string file);
 
-    void clearSounds();
+    static void clearSounds();
 };
 
 

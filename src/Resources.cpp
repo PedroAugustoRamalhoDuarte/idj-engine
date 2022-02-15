@@ -5,6 +5,10 @@
 #include "Resources.h"
 #include "Game.h"
 
+std::unordered_map<std::string, SDL_Texture *> Resources::imageTable;
+std::unordered_map<std::string, Mix_Music *> Resources::musicTable;
+std::unordered_map<std::string, Mix_Chunk *> Resources::soundTable;
+
 SDL_Texture *Resources::getImage(std::string file) {
     auto got = imageTable.find(file);
     if (got == imageTable.end()) {
@@ -24,7 +28,7 @@ SDL_Texture *Resources::getImage(std::string file) {
 
 void Resources::clearImages() {
     for (auto image: imageTable) {
-        free(image.second);
+        SDL_DestroyTexture(image.second);
     }
     imageTable.clear();
 }
