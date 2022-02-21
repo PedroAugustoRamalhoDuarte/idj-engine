@@ -8,6 +8,8 @@ const static int DEFAULT_ALLOCATED_CHANNELS = 32;
 Game::Game(std::string title, int width, int height) {
     if (instance != nullptr) throw "Game already initialize";
 
+    frameStart = 0;
+    dt = 0;
     instance = this;
 
     if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_AUDIO | SDL_INIT_TIMER)) {
@@ -60,8 +62,9 @@ SDL_Renderer *Game::getRenderer() {
 
 void Game::run() {
     while (!state->getQuitRequested()) {
+        calculateDeltaTime();
         InputManager::getInstance().update();
-        state->update('X');
+        state->update(dt);
         state->render();
         SDL_RenderPresent(renderer);
         SDL_RenderClear(renderer);
@@ -76,4 +79,17 @@ void Game::run() {
 State &Game::getState() {
     return *state;
 }
+
+void Game::calculateDeltaTime() {
+    auto actualFrame = SDL_GetTicks();
+    actualFrame *= 100;
+    dt = actualFrame - frameStart;
+    frameStart = actualFrame;
+}
+
+float Game::getDeltaTime() {
+    return dt;
+}
+
+
 

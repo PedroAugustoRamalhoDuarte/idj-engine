@@ -51,7 +51,6 @@ void InputManager::update() {
                 if (event.key.repeat) {
                     break;
                 }
-                std::cout << "KeyDown" << event.type << std::endl;
                 keyState[keycodeToInt(event.key.keysym.sym)] = true;
                 keyUpdate[keycodeToInt(event.key.keysym.sym)] = updateCounter;
                 break;
@@ -60,7 +59,6 @@ void InputManager::update() {
                 keyUpdate[keycodeToInt(event.key.keysym.sym)] = updateCounter;
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                std::cout << "MOUSEBUTTONDOWN" << event.type << std::endl;
                 mouseState[event.button.button] = true;
                 mouseUpdate[event.button.button] = updateCounter;
                 break;

@@ -30,7 +30,6 @@ void State::update(float dt) {
 
 
     if (inputManager.keyPress(SDLK_SPACE)) {
-        std::cout << "Teste" << std::endl;
         Vec2 objPos = Vec2(200, 0).rotate(-PI + PI * (rand() % 1001) / 500.0) +
                       Vec2(inputManager.getMouseX(), inputManager.getMouseY());
         addObject((int) objPos.x, (int) objPos.y);
