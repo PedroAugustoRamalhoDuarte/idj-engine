@@ -78,27 +78,29 @@ void InputManager::update() {
 }
 
 bool InputManager::keyPress(int key) {
-    return keyState[keycodeToInt(key)] == updateCounter;
+    auto k = keycodeToInt(key);
+    return (keyUpdate[k] == updateCounter && keyState[k]);
 }
 
 bool InputManager::keyRelease(int key) {
-    return !keyState[keycodeToInt(key)];
+    auto k = keycodeToInt(key);
+    return (keyUpdate[k] == updateCounter && !keyState[k]);
 }
 
 bool InputManager::isKeyDown(int key) {
-    return keyUpdate[keycodeToInt(key)];
+    return keyState[keycodeToInt(key)];
 }
 
 bool InputManager::mousePress(int mouse) {
-    return mouseState[mouse];
+    return mouseUpdate[mouse] == updateCounter && mouseState[mouse];
 }
 
 bool InputManager::mouseRelease(int mouse) {
-    return !mouseState[mouse];
+    return mouseUpdate[mouse] == updateCounter && !mouseState[mouse];
 }
 
 bool InputManager::isMouseDown(int mouse) {
-    return mouseUpdate[mouse];
+    return mouseState[mouse];
 }
 
 InputManager::~InputManager() {
