@@ -2,6 +2,7 @@
 // Created by pedro on 21/02/2022.
 //
 
+#include <iostream>
 #include "InputManager.h"
 
 bool InputManager::isQuitRequested() const {
@@ -16,17 +17,19 @@ int InputManager::getMouseY() const {
     return mouseY;
 }
 
-InputManager &InputManager::getInstance() {
-    static InputManager inputManager = InputManager();
-    return inputManager;
-}
-
 InputManager::InputManager() {
     quitRequested = false;
     updateCounter = 0;
     mouseX = 0;
     mouseY = 0;
 }
+
+
+InputManager &InputManager::getInstance() {
+    static InputManager inputManager;
+    return inputManager;
+}
+
 
 int keycodeToInt(int sdlKeyCode) {
     if (sdlKeyCode > 0x40000000) {
@@ -37,39 +40,45 @@ int keycodeToInt(int sdlKeyCode) {
 }
 
 void InputManager::update() {
-    SDL_Event *event;
-    SDL_PollEvent(event);
-
+    SDL_Event event;
+    updateCounter++;
     SDL_GetMouseState(&mouseX, &mouseY);
     quitRequested = false;
 
-    if (!event->key.repeat) {
-        switch (event->type) {
+    while (SDL_PollEvent(&event)) {
+        switch (event.type) {
             case SDL_KEYDOWN:
-                keyState[keycodeToInt(event->key.keysym.sym)] = true;
-                keyUpdate[keycodeToInt(event->key.keysym.sym)] += 1;
+                if (event.key.repeat) {
+                    break;
+                }
+                std::cout << "KeyDown" << event.type << std::endl;
+                keyState[keycodeToInt(event.key.keysym.sym)] = true;
+                keyUpdate[keycodeToInt(event.key.keysym.sym)] = updateCounter;
                 break;
             case SDL_KEYUP:
-                keyState[keycodeToInt(event->key.keysym.sym)] = false;
-                keyUpdate[keycodeToInt(event->key.keysym.sym)] += 1;
+                keyState[keycodeToInt(event.key.keysym.sym)] = false;
+                keyUpdate[keycodeToInt(event.key.keysym.sym)] = updateCounter;
                 break;
             case SDL_MOUSEBUTTONDOWN:
-                mouseState[event->button.button] = true;
-                mouseUpdate[event->button.button] += 1;
+                std::cout << "MOUSEBUTTONDOWN" << event.type << std::endl;
+                mouseState[event.button.button] = true;
+                mouseUpdate[event.button.button] = updateCounter;
                 break;
             case SDL_MOUSEBUTTONUP:
-                mouseState[event->button.button] = false;
-                mouseUpdate[event->button.button] += 1;
+                mouseState[event.button.button] = false;
+                mouseUpdate[event.button.button] = updateCounter;
                 break;
             case SDL_QUIT:
                 quitRequested = true;
 
         }
     }
+
+
 }
 
 bool InputManager::keyPress(int key) {
-    return keyState[keycodeToInt(key)];
+    return keyState[keycodeToInt(key)] == updateCounter;
 }
 
 bool InputManager::keyRelease(int key) {
@@ -90,4 +99,8 @@ bool InputManager::mouseRelease(int mouse) {
 
 bool InputManager::isMouseDown(int mouse) {
     return mouseUpdate[mouse];
+}
+
+InputManager::~InputManager() {
+
 }

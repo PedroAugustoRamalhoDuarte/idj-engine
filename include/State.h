@@ -8,6 +8,7 @@
 #include "Vec2.h"
 #include "Sound.h"
 #include "TileMap.h"
+#include "InputManager.h"
 
 class State {
 private:

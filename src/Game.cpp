@@ -60,6 +60,7 @@ SDL_Renderer *Game::getRenderer() {
 
 void Game::run() {
     while (!state->getQuitRequested()) {
+        InputManager::getInstance().update();
         state->update('X');
         state->render();
         SDL_RenderPresent(renderer);

@@ -8,6 +8,7 @@
 #include "../lib/SDL_include.h"
 #include "State.h"
 #include <iostream>
+#include "InputManager.h"
 
 class Game {
 private:

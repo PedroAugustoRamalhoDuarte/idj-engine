@@ -9,7 +9,7 @@ State::State() {
 //    bg = new Sprite(gameObject, "./assets/img/cachorro-caramelo.png");
     quitRequested = false;
     music = Music("./assets/audio/stageState.ogg");
-    music.play();
+    // music.play();
 
     auto gameObject = new GameObject();
     gameObject->box.x = 0;
@@ -25,7 +25,17 @@ void State::loadAssets() {
 }
 
 void State::update(float dt) {
-    input();
+    // input();
+    auto inputManager = InputManager::getInstance();
+
+
+    if (inputManager.keyPress(SDLK_SPACE)) {
+        std::cout << "Teste" << std::endl;
+        Vec2 objPos = Vec2(200, 0).rotate(-PI + PI * (rand() % 1001) / 500.0) +
+                      Vec2(inputManager.getMouseX(), inputManager.getMouseY());
+        addObject((int) objPos.x, (int) objPos.y);
+    }
+
     for (long i = 0; i < objectArray.size(); i++) {
         objectArray[i]->update(dt);
         if (objectArray[i]->getIsDead()) {
@@ -33,7 +43,8 @@ void State::update(float dt) {
             std::cout << objectArray.size() << std::endl;
         }
     }
-    if (SDL_QuitRequested()) {
+
+    if (SDL_QuitRequested() or inputManager.isQuitRequested()) {
         quitRequested = true;
     }
 }

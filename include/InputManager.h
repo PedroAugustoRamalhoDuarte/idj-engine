@@ -26,7 +26,6 @@ private:
     int keyUpdate[416] = {0};
 
     bool quitRequested = false;
-
     int updateCounter = 0;
 
     int mouseX = 0;
@@ -53,7 +52,7 @@ public:
 
     int getMouseY() const;
 
-    InputManager &getInstance();
+    static InputManager &getInstance();
 
     InputManager();
 
