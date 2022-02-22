@@ -21,6 +21,8 @@ public:
 
     ~Sprite();
 
+    void start() override;
+
     void open(std::string file);
 
     void setClip(int x, int y, int w, int h);

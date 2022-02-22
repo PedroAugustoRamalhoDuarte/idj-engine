@@ -5,6 +5,7 @@
 #include "../include/State.h"
 #include "Camera.h"
 #include "CameraFollower.h"
+#include "Alien.h"
 
 State::State() {
     quitRequested = false;
@@ -31,6 +32,15 @@ State::State() {
     auto tileMap = new TileMap(*gameObject, "./assets/map/tileMap.txt", tileSet);
     gameObject->addComponent(tileMap);
     objectArray.emplace_back(gameObject);
+
+
+    // Initialize Alien
+    auto goAlien = new GameObject;
+    auto alien = new Alien(*goAlien, 5);
+    alien->associated.box.x = 512;
+    alien->associated.box.y = 300;
+    gameObject->addComponent(alien);
+    objectArray.emplace_back(goAlien);
 }
 
 void State::loadAssets() {
@@ -91,8 +101,8 @@ void State::addObject(int mouseX, int mouseY) {
     gameObject->addComponent(sound);
 
     // Adds Face
-    auto face = new Face(*gameObject);
-    gameObject->addComponent(face);
+//    auto face = new Face(*gameObject);
+//    gameObject->addComponent(face);
 
     objectArray.emplace_back(gameObject);
 }

@@ -79,3 +79,7 @@ bool Sprite::is(std::string type) {
     return type == "Sprite";
 }
 
+void Sprite::start() {
+
+}
+

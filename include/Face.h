@@ -15,6 +15,8 @@ public:
 
     void damage(int damage);
 
+    void start() override;
+
     void update(float dt) override;
 
     void render() override;

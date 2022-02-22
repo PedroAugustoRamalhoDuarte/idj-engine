@@ -44,3 +44,7 @@ bool Sound::is(std::string type) {
     return true;
 }
 
+void Sound::start() {
+
+}
+

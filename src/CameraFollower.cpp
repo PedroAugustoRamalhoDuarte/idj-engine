@@ -20,3 +20,7 @@ bool CameraFollower::is(std::string type) {
 CameraFollower::CameraFollower(GameObject &go) : Component(go) {
 
 }
+
+void CameraFollower::start() {
+
+}

@@ -18,9 +18,9 @@ private:
     int channel;
 
 public:
-    explicit Sound(GameObject& associated);
+    explicit Sound(GameObject &associated);
 
-    Sound(GameObject& associated, std::string file);
+    Sound(GameObject &associated, std::string file);
 
     ~Sound();
 
@@ -32,7 +32,8 @@ public:
 
     bool isOpen();
 
-    // TODO: We need to implement this functions?
+    void start() override;
+
     void update(float dt) override;
 
     void render() override;
@@ -40,4 +41,5 @@ public:
     bool is(std::string type) override;
 
 };
+
 #endif //IDJ_ENGINE_SOUND_H

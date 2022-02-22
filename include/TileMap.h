@@ -22,9 +22,7 @@ private:
 public:
     explicit TileMap(GameObject &associated);
 
-
     TileMap(GameObject &associated, std::string file, TileSet *tileSet);
-
 
     ~TileMap();
 
@@ -33,6 +31,8 @@ public:
     void setTileSet(TileSet *tileSet);
 
     int &at(int x, int y, int z = 0);
+
+    void start() override;
 
     void update(float dt) override;
 

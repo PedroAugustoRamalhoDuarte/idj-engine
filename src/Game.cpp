@@ -61,6 +61,7 @@ SDL_Renderer *Game::getRenderer() {
 }
 
 void Game::run() {
+    state->start();
     while (!state->getQuitRequested()) {
         calculateDeltaTime();
         InputManager::getInstance().update();

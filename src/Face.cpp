@@ -41,3 +41,7 @@ int Face::getHitpoints() const {
     return hitpoints;
 }
 
+void Face::start() {
+
+}
+

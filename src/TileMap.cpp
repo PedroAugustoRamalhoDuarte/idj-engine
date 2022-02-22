@@ -108,3 +108,7 @@ void TileMap::setTileSet(TileSet *tileSet) {
 int &TileMap::at(int x, int y, int z) {
     return tileMatrix[z * (mapWidth * mapHeight) + x + y * mapWidth];
 }
+
+void TileMap::start() {
+
+}

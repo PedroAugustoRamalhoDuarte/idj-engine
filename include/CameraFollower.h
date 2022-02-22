@@ -13,6 +13,8 @@ class CameraFollower : public Component {
 public:
     explicit CameraFollower(GameObject &go);
 
+    void start() override;
+
     void update(float dt) override;
 
     void render() override;
