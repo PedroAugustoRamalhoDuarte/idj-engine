@@ -12,7 +12,7 @@ State::State() {
     // Initialize Background
     auto backgroundObject = new GameObject;
     auto bgSprite = new Sprite(*backgroundObject, "./assets/img/ocean.jpg");
-    bgSprite->setClip(0, 0, 1024, 600);
+    bgSprite->setClip(0, 0, SCREEN_W, SCREEN_H);
     auto cameraFollower = new CameraFollower(*backgroundObject);
     backgroundObject->addComponent(bgSprite);
     backgroundObject->addComponent(cameraFollower);

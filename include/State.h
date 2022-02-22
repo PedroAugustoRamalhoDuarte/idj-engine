@@ -10,6 +10,9 @@
 #include "TileMap.h"
 #include "InputManager.h"
 
+#define SCREEN_W 1024
+#define SCREEN_H 600
+
 class State {
 private:
     Music music;
