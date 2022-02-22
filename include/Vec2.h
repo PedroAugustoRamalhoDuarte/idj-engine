@@ -18,8 +18,11 @@ public:
 
     Vec2 operator+(Vec2 const &obj) const;
 
+    Vec2 operator-(Vec2 const &obj) const;
+
     Vec2 rotate(float angle);
 
+    float magnitude();
 };
 
 

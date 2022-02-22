@@ -25,6 +25,17 @@ Vec2 Vec2::rotate(float angle) {
     return vec2;
 }
 
+Vec2 Vec2::operator-(const Vec2 &obj) const {
+    Vec2 vec2{};
+    vec2.x = x - obj.x;
+    vec2.y = y - obj.y;
+    return vec2;
+}
+
+float Vec2::magnitude() {
+    return sqrt((x * x) + (y * y));
+}
+
 
 
 
