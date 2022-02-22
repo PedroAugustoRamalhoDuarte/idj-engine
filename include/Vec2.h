@@ -6,6 +6,7 @@
 #define IDJ_ENGINE_VEC2_H
 
 #include <math.h>
+
 #define PI 3.14159265
 
 class Vec2 {
@@ -21,6 +22,10 @@ public:
     Vec2 operator-(Vec2 const &obj) const;
 
     Vec2 rotate(float angle);
+
+    float angle();
+
+    float angle(Vec2);
 
     float magnitude();
 };

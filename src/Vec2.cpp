@@ -36,6 +36,15 @@ float Vec2::magnitude() {
     return sqrt((x * x) + (y * y));
 }
 
+float Vec2::angle() {
+    return atan2(y, x);
+}
+
+float Vec2::angle(Vec2 vec) {
+    auto tmp = vec - (*this);
+    return tmp.angle();
+}
+
 
 
 
