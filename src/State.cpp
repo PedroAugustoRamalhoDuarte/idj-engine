@@ -6,6 +6,7 @@
 #include "Camera.h"
 #include "CameraFollower.h"
 #include "Alien.h"
+#include "Assets.h"
 
 State::State() {
     quitRequested = false;
@@ -13,7 +14,7 @@ State::State() {
 
     // Initialize Background
     auto backgroundObject = new GameObject;
-    auto bgSprite = new Sprite(*backgroundObject, "./assets/img/ocean.jpg");
+    auto bgSprite = new Sprite(*backgroundObject, Assets::getImg("ocean.jpg"));
     bgSprite->setClip(0, 0, SCREEN_W, SCREEN_H);
     auto cameraFollower = new CameraFollower(*backgroundObject);
     backgroundObject->addComponent(bgSprite);
@@ -21,15 +22,15 @@ State::State() {
     objectArray.emplace_back(backgroundObject);
 
     // Music
-    music = Music("./assets/audio/stageState.ogg");
+    music = Music(Assets::getAudio("stageState.ogg"));
     // music.play();
 
     // Map
     auto gameObject = new GameObject();
     gameObject->box.x = 0;
     gameObject->box.y = 0;
-    auto tileSet = new TileSet(64, 64, "./assets/img/tileset.png");
-    auto tileMap = new TileMap(*gameObject, "./assets/map/tileMap.txt", tileSet);
+    auto tileSet = new TileSet(64, 64, Assets::getImg("tileset.png"));
+    auto tileMap = new TileMap(*gameObject, Assets::getMap("tileMap.txt"), tileSet);
     gameObject->addComponent(tileMap);
     objectArray.emplace_back(gameObject);
 
@@ -93,11 +94,11 @@ void State::addObject(int mouseX, int mouseY) {
     gameObject->box.y = mouseY;
 
     // Adds Sprite
-    auto sprite = new Sprite(*gameObject, "./assets/img/penguinface.png");
+    auto sprite = new Sprite(*gameObject, Assets::getImg("penguinface.png"));
     gameObject->addComponent(sprite);
 
     // Adds Sound
-    auto sound = new Sound(*gameObject, "./assets/audio/boom.wav");
+    auto sound = new Sound(*gameObject, Assets::getAudio("boom.wav"));
     gameObject->addComponent(sound);
 
     // Adds Face

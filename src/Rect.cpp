@@ -8,3 +8,8 @@ bool Rect::contains(float mouseX, float mouseY) {
         return false;
     }
 }
+
+Vec2 Rect::middle() {
+    Vec2 middleVec(x + (w / 2), y + (h / 2));
+    return middleVec;
+}

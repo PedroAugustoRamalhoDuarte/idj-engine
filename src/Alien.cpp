@@ -6,6 +6,10 @@
 #include "Sprite.h"
 #include "InputManager.h"
 #include "Camera.h"
+#include "Minion.h"
+#include "State.h"
+#include "Game.h"
+#include "Assets.h"
 
 void Alien::update(float dt) {
     auto input = InputManager::getInstance();
@@ -28,7 +32,7 @@ void Alien::update(float dt) {
     if (!taskQueue.empty()) {
         auto action = taskQueue.front();
         if (action.type == Action::ActionType::MOVE) {
-            Vec2 actualPosition = Vec2(associated.box.x, associated.box.y);
+            Vec2 actualPosition = associated.box.middle();
             auto dist = (action.pos - actualPosition).magnitude();
             auto needSpeed = dist / dt;
 
@@ -59,7 +63,14 @@ void Alien::render() {
 
 void Alien::start() {
     std::cout << "Start" << std::endl;
-    // TODO: Add Minion
+    // TODO: Maybe so wrong
+    std::shared_ptr<GameObject> spAlien(&associated);
+    std::weak_ptr<GameObject> wkAlien = spAlien;
+    auto goMinion = new GameObject();
+    auto minion = new Minion(*goMinion, wkAlien, 0);
+    goMinion->addComponent(minion);
+    minionArray.emplace_back(Game::getInstance().getState().addObject(goMinion).lock());
+    std::cout << "End" << std::endl;
 }
 
 bool Alien::is(std::string type) {
@@ -68,7 +79,7 @@ bool Alien::is(std::string type) {
 
 
 Alien::Alien(GameObject &associated, int nMinions) : Component(associated) {
-    auto sprite = new Sprite(associated, "./assets/img/alien.png");
+    auto sprite = new Sprite(associated, Assets::getImg("alien.png"));
     associated.addComponent(sprite);
 
     hp = 30;
