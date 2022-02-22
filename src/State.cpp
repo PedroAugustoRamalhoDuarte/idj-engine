@@ -4,14 +4,25 @@
 
 #include "../include/State.h"
 #include "Camera.h"
+#include "CameraFollower.h"
 
 State::State() {
-//    GameObject gameObject;
-//    bg = new Sprite(gameObject, "./assets/img/cachorro-caramelo.png");
     quitRequested = false;
+
+    // Initialize Background
+    auto backgroundObject = new GameObject;
+    auto bgSprite = new Sprite(*backgroundObject, "./assets/img/ocean.jpg");
+    bgSprite->setClip(0, 0, 1024, 600);
+    auto cameraFollower = new CameraFollower(*backgroundObject);
+    backgroundObject->addComponent(bgSprite);
+    backgroundObject->addComponent(cameraFollower);
+    objectArray.emplace_back(backgroundObject);
+
+    // Music
     music = Music("./assets/audio/stageState.ogg");
     // music.play();
 
+    // Map
     auto gameObject = new GameObject();
     gameObject->box.x = 0;
     gameObject->box.y = 0;

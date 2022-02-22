@@ -5,6 +5,9 @@
 #define INCLUDE_SDL_IMAGE
 #define INCLUDE_SDL_MIXER
 
+#define SCREEN_W 1024
+#define SCREEN_H 600
+
 #include "../lib/SDL_include.h"
 #include "State.h"
 #include <iostream>
