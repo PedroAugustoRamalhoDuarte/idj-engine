@@ -18,12 +18,15 @@ private:
 
     bool isDead;
 
+    bool started;
 public:
     std::vector<std::unique_ptr<Component>> components; // DEBUG MOVE TO PRIVATE
 
     GameObject();
 
     ~GameObject();
+
+    void start();
 
     void update(float dt);
 

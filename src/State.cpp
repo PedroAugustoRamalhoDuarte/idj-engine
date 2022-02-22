@@ -8,6 +8,7 @@
 
 State::State() {
     quitRequested = false;
+    started = false;
 
     // Initialize Background
     auto backgroundObject = new GameObject;
@@ -20,7 +21,7 @@ State::State() {
 
     // Music
     music = Music("./assets/audio/stageState.ogg");
-    music.play();
+    // music.play();
 
     // Map
     auto gameObject = new GameObject();
@@ -76,60 +77,6 @@ State::~State() {
     // objectArray.clear();
 }
 
-void State::input() {
-    SDL_Event event;
-    int mouseX, mouseY;
-
-    // Obtenha as coordenadas do mouse
-    SDL_GetMouseState(&mouseX, &mouseY);
-
-    // SDL_PollEvent retorna 1 se encontrar eventos, zero caso contrário
-    while (SDL_PollEvent(&event)) {
-
-        // Se o evento for quit, setar a flag para terminação
-        if (event.type == SDL_QUIT) {
-            quitRequested = true;
-        }
-
-        // Se o evento for clique...
-        if (event.type == SDL_MOUSEBUTTONDOWN) {
-
-            std::cout << mouseX << "," << mouseY << std::endl;
-            // Percorrer de trás pra frente pra sempre clicar no objeto mais de cima
-            for (int i = objectArray.size() - 1; i >= 0; --i) {
-                // Obtem o ponteiro e casta pra Face.
-                GameObject *go = (GameObject *) objectArray[i].get();
-                // Nota: Desencapsular o ponteiro é algo que devemos evitar ao máximo.
-                // O propósito do unique_ptr é manter apenas uma cópia daquele ponteiro,
-                // ao usar get(), violamos esse princípio e estamos menos seguros.
-                // Esse código, assim como a classe Face, é provisório. Futuramente, para
-                // chamar funções de GameObjects, use objectArray[i]->função() direto.
-
-                if (go->box.contains(mouseX, mouseY)) {
-                    Face *face = (Face *) go->getComponent("Face");
-                    if (nullptr != face) {
-                        // Aplica dano
-                        face->damage(std::rand() % 10 + 10);
-                        // Sai do loop (só queremos acertar um)
-                        break;
-                    }
-                }
-            }
-        }
-        if (event.type == SDL_KEYDOWN) {
-            // Se a tecla for ESC, setar a flag de quit
-            if (event.key.keysym.sym == SDLK_ESCAPE) {
-                quitRequested = true;
-            }
-                // Se não, crie um objeto
-            else {
-                Vec2 objPos = Vec2(200, 0).rotate(-PI + PI * (rand() % 1001) / 500.0) + Vec2(mouseX, mouseY);
-                addObject((int) objPos.x, (int) objPos.y);
-            }
-        }
-    }
-}
-
 void State::addObject(int mouseX, int mouseY) {
     auto gameObject = new GameObject();
     gameObject->box.x = mouseX;
@@ -148,4 +95,33 @@ void State::addObject(int mouseX, int mouseY) {
     gameObject->addComponent(face);
 
     objectArray.emplace_back(gameObject);
+}
+
+void State::start() {
+    loadAssets();
+
+    for (auto obj: objectArray) {
+        obj->start();
+    }
+
+    started = true;
+}
+
+std::weak_ptr<GameObject> State::addObject(GameObject *go) {
+    std::shared_ptr<GameObject> sharedPtr(go);
+    objectArray.push_back(sharedPtr);
+
+    if (started) {
+        go->start();
+    }
+    return std::weak_ptr<GameObject>(sharedPtr);
+}
+
+std::weak_ptr<GameObject> State::getObjectPtr(GameObject *go) {
+    for (const auto &obj: objectArray) {
+        if (obj.get() == go) {
+            return std::weak_ptr<GameObject>(obj);
+        }
+    }
+    return std::weak_ptr<GameObject>();
 }

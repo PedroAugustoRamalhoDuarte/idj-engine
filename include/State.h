@@ -18,12 +18,15 @@ private:
     Music music;
     // Sprite bg;
     bool quitRequested;
-    std::vector<std::unique_ptr<GameObject>> objectArray;
+    bool started;
+    std::vector<std::shared_ptr<GameObject>> objectArray;
 
 public:
     State();
 
     ~State();
+
+    void start();
 
     bool getQuitRequested();
 
@@ -33,9 +36,11 @@ public:
 
     void render();
 
-    void input();
-
     void addObject(int mouseX, int mouseY);
+
+    std::weak_ptr<GameObject> addObject(GameObject *go);
+
+    std::weak_ptr<GameObject> getObjectPtr(GameObject *go);
 };
 
 

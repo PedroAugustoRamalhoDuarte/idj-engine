@@ -18,6 +18,8 @@ public:
 
     virtual void render() = 0;
 
+    virtual void start() = 0;
+
     virtual bool is(std::string type) = 0;
 };
 

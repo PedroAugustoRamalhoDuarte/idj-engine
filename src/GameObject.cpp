@@ -3,6 +3,7 @@
 
 GameObject::GameObject() {
     isDead = false;
+    started = false;
 }
 
 GameObject::~GameObject() {
@@ -31,6 +32,10 @@ void GameObject::requestDelete() {
 
 void GameObject::addComponent(Component *cpt) {
     components.emplace_back(cpt);
+
+    if (started) {
+        cpt->start();
+    }
 }
 
 // TODO: Build this function
@@ -47,4 +52,12 @@ Component *GameObject::getComponent(std::string type) {
         }
     }
     return temp;
+}
+
+void GameObject::start() {
+    started = true;
+
+    for (auto &cpt: components) {
+        cpt->start();
+    }
 }
