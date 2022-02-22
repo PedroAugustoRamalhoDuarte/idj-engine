@@ -3,6 +3,7 @@
 //
 
 #include "../include/State.h"
+#include "Camera.h"
 
 State::State() {
 //    GameObject gameObject;
@@ -25,13 +26,13 @@ void State::loadAssets() {
 }
 
 void State::update(float dt) {
-    // input();
     auto inputManager = InputManager::getInstance();
 
+    Camera::update(dt);
 
     if (inputManager.keyPress(SDLK_SPACE)) {
         Vec2 objPos = Vec2(200, 0).rotate(-PI + PI * (rand() % 1001) / 500.0) +
-                      Vec2(inputManager.getMouseX(), inputManager.getMouseY());
+                      Vec2(inputManager.getMouseX() + Camera::pos.x, inputManager.getMouseY() + Camera::pos.y);
         addObject((int) objPos.x, (int) objPos.y);
     }
 

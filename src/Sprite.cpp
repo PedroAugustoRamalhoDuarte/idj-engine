@@ -3,6 +3,7 @@
 #include <utility>
 #include "Game.h"
 #include "Resources.h"
+#include "Camera.h"
 
 Sprite::Sprite(GameObject &associated) : Component(associated) {
     texture = nullptr;
@@ -56,7 +57,7 @@ void Sprite::render(int x, int y) {
 
 
 void Sprite::render() {
-    render(static_cast<int>(associated.box.x), static_cast<int>(associated.box.y));
+    render(static_cast<int>(associated.box.x) - Camera::pos.x, static_cast<int>(associated.box.y) - Camera::pos.y);
 }
 
 int Sprite::getHeight() {

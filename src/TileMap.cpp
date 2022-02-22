@@ -4,6 +4,7 @@
 
 #include <fstream>
 #include "../include/TileMap.h"
+#include "Camera.h"
 
 void TileMap::update(float dt) {
 
@@ -11,18 +12,17 @@ void TileMap::update(float dt) {
 
 void TileMap::render() {
     for (auto z = 0; z < mapDepth; ++z) {
-        renderLayer(z, 0, 0);
+        renderLayer(z, Camera::pos.x, Camera::pos.y);
     }
 }
 
 void TileMap::renderLayer(int layer, int cameraX, int cameraY) {
-    // TODO CameraX
     auto cont = 0;
     for (auto x = 0; x < mapWidth; x++) {
         for (auto y = 0; y < mapHeight; y++) {
             tileSet->renderTile(tileMatrix[cont + (layer * (mapWidth * mapHeight))],
-                                x * tileSet->getTileWidth() + associated.box.x,
-                                y * tileSet->getTileHeight() + associated.box.y);
+                                x * tileSet->getTileWidth() + (associated.box.x - cameraX),
+                                y * tileSet->getTileHeight() + (associated.box.y - cameraY));
             cont++;
         }
     }
@@ -31,7 +31,7 @@ void TileMap::renderLayer(int layer, int cameraX, int cameraY) {
 
 
 bool TileMap::is(std::string type) {
-    return false;
+    return "TitleMap";
 }
 
 TileMap::TileMap(GameObject &associated) : Component(associated) {
