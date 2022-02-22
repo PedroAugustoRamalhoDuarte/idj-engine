@@ -6,6 +6,7 @@
 #include "Sprite.h"
 #include "Assets.h"
 #include "Bullet.h"
+#include "Game.h"
 
 void Minion::update(float dt) {
     // Update rotation
@@ -53,6 +54,12 @@ Minion::Minion(GameObject &associated, GameObject *alienCenter, float arcOffSetD
 void Minion::shoot(Vec2 target) {
     auto center = Vec2(associated.box.x, associated.box.y);
     float angle = center.angle(target);
-    auto bullet = new Bullet(associated, angle, 5, 5, 1000, "minionbullet1.png");
-    associated.addComponent(bullet);
+
+    // New bullet Game Object
+    auto bulletGo = new GameObject();
+    bulletGo->box.x = center.x;
+    bulletGo->box.y = center.y;
+    auto bullet = new Bullet(*bulletGo, angle, 0.01, 5, 1000, "minionbullet1.png");
+    bulletGo->addComponent(bullet);
+    Game::getInstance().getState().addObject(bulletGo);
 }

@@ -17,13 +17,11 @@ void Alien::update(float dt) {
 
     if (input.mousePress(LEFT_MOUSE_BUTTON)) {
         // Shoot
-        std::cout << "Shoot" << std::endl;
         auto action = Action(Action::ActionType::SHOOT, input.getMouseX() + Camera::pos.x,
                              input.getMouseY() + Camera::pos.y);
         taskQueue.emplace(action);
     } else if (input.mousePress(RIGHT_MOUSE_BUTTON)) {
         // Moves
-        std::cout << "Moves" << std::endl;
         auto action = Action(Action::ActionType::MOVE, input.getMouseX() + Camera::pos.x,
                              input.getMouseY() + Camera::pos.y);
         taskQueue.emplace(action);
@@ -48,6 +46,9 @@ void Alien::update(float dt) {
 
         } else {
             // Shoot action
+            auto minionGo = minionArray[0].lock();
+            Minion *minion = (Minion *) minionGo->getComponent("Minion");
+            minion->shoot(action.pos);
             taskQueue.pop();
         }
     }
@@ -62,7 +63,6 @@ void Alien::render() {
 }
 
 void Alien::start() {
-    std::cout << "Start" << std::endl;
     // TODO: Changes to shared_ptr
 //    std::shared_ptr<GameObject> spAlien(&associated);
 //    std::weak_ptr<GameObject> wkAlien = spAlien;
@@ -70,7 +70,6 @@ void Alien::start() {
     auto minion = new Minion(*goMinion, &associated, 0);
     goMinion->addComponent(minion);
     minionArray.emplace_back(Game::getInstance().getState().addObject(goMinion).lock());
-    std::cout << "End" << std::endl;
 }
 
 bool Alien::is(std::string type) {
@@ -83,7 +82,7 @@ Alien::Alien(GameObject &associated, int nMinions) : Component(associated) {
     associated.addComponent(sprite);
 
     hp = 30;
-    speed = Vec2(30, 30);
+    speed = Vec2(1, 1);
 }
 
 Alien::~Alien() {
@@ -91,6 +90,6 @@ Alien::~Alien() {
 }
 
 Alien::Action::Action(Alien::Action::ActionType type, float x, float y) {
-    type = type;
+    this->type = type;
     pos = Vec2(x, y);
 }

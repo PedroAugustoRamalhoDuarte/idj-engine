@@ -64,7 +64,6 @@ void State::update(float dt) {
         objectArray[i]->update(dt);
         if (objectArray[i]->getIsDead()) {
             objectArray.erase(objectArray.begin() + i);
-            std::cout << objectArray.size() << std::endl;
         }
     }
 
@@ -113,7 +112,6 @@ void State::start() {
     loadAssets();
 
     for (const auto& obj: objectArray) {
-        std::cout << "Start ALOHA" << std::endl;
         obj->start();
     }
 
