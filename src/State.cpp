@@ -20,7 +20,7 @@ State::State() {
 
     // Music
     music = Music("./assets/audio/stageState.ogg");
-    // music.play();
+    music.play();
 
     // Map
     auto gameObject = new GameObject();
