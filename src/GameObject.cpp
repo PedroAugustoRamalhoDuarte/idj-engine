@@ -11,6 +11,7 @@ GameObject::~GameObject() {
 }
 
 void GameObject::update(float dt) {
+
     for (auto &cpt: components) {
         cpt->update(dt);
     }

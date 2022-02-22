@@ -8,7 +8,7 @@
 
 #include <string>
 
-#define IDE 1
+#define IDE 0
 
 class Assets {
 public:

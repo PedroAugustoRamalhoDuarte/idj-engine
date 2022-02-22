@@ -40,8 +40,9 @@ State::State() {
     auto alien = new Alien(*goAlien, 5);
     alien->associated.box.x = 512;
     alien->associated.box.y = 300;
-    gameObject->addComponent(alien);
+    goAlien->addComponent(alien);
     objectArray.emplace_back(goAlien);
+
 }
 
 void State::loadAssets() {
@@ -111,7 +112,8 @@ void State::addObject(int mouseX, int mouseY) {
 void State::start() {
     loadAssets();
 
-    for (auto obj: objectArray) {
+    for (const auto& obj: objectArray) {
+        std::cout << "Start ALOHA" << std::endl;
         obj->start();
     }
 

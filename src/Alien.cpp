@@ -63,11 +63,11 @@ void Alien::render() {
 
 void Alien::start() {
     std::cout << "Start" << std::endl;
-    // TODO: Maybe so wrong
-    std::shared_ptr<GameObject> spAlien(&associated);
-    std::weak_ptr<GameObject> wkAlien = spAlien;
+    // TODO: Changes to shared_ptr
+//    std::shared_ptr<GameObject> spAlien(&associated);
+//    std::weak_ptr<GameObject> wkAlien = spAlien;
     auto goMinion = new GameObject();
-    auto minion = new Minion(*goMinion, wkAlien, 0);
+    auto minion = new Minion(*goMinion, &associated, 0);
     goMinion->addComponent(minion);
     minionArray.emplace_back(Game::getInstance().getState().addObject(goMinion).lock());
     std::cout << "End" << std::endl;
