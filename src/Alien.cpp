@@ -14,6 +14,8 @@
 void Alien::update(float dt) {
     auto input = InputManager::getInstance();
 
+    Sprite *sprite = (Sprite *) associated.getComponent("Sprite");
+    sprite->angleDeg += 10;
 
     if (input.mousePress(LEFT_MOUSE_BUTTON)) {
         // Shoot
@@ -64,12 +66,14 @@ void Alien::render() {
 
 void Alien::start() {
     // TODO: Changes to shared_ptr
-//    std::shared_ptr<GameObject> spAlien(&associated);
-//    std::weak_ptr<GameObject> wkAlien = spAlien;
-    auto goMinion = new GameObject();
-    auto minion = new Minion(*goMinion, &associated, 0);
-    goMinion->addComponent(minion);
-    minionArray.emplace_back(Game::getInstance().getState().addObject(goMinion).lock());
+    //    std::shared_ptr<GameObject> spAlien(&associated);
+    //    std::weak_ptr<GameObject> wkAlien = spAlien;
+    for (int i = 0; i < nMinions; i++) {
+        auto goMinion = new GameObject();
+        auto minion = new Minion(*goMinion, &associated, i * 10);
+        goMinion->addComponent(minion);
+        minionArray.emplace_back(Game::getInstance().getState().addObject(goMinion).lock());
+    }
 }
 
 bool Alien::is(std::string type) {
@@ -80,7 +84,7 @@ bool Alien::is(std::string type) {
 Alien::Alien(GameObject &associated, int nMinions) : Component(associated) {
     auto sprite = new Sprite(associated, Assets::getImg("alien.png"));
     associated.addComponent(sprite);
-
+    this->nMinions = nMinions;
     hp = 30;
     speed = Vec2(1, 1);
 }

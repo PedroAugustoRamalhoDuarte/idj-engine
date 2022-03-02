@@ -44,7 +44,6 @@ Minion::Minion(GameObject &associated, GameObject *alienCenter, float arcOffSetD
     // Sprite for minion
     auto sprite = new Sprite(associated, Assets::getImg("minion.png"));
     float scale = ((rand() % 30) / 60.0) + 1;
-    std::cout << scale << std::endl;
     sprite->setScaleX(scale, scale);
     associated.addComponent(sprite);
 }
