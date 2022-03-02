@@ -16,6 +16,8 @@ private:
     SDL_Rect clipRect;
     Vec2 scale;
 public:
+    float angleDeg;
+
     explicit Sprite(GameObject &associated);
 
     Sprite(GameObject &associated, std::string file);

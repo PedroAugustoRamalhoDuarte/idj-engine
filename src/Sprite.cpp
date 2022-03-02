@@ -17,6 +17,7 @@ Sprite::Sprite(GameObject &associated, std::string file) : Component(associated)
     associated.box.w = width;
     associated.box.h = height;
     setScaleX(1, 1);
+    angleDeg = 0;
 }
 
 Sprite::~Sprite() {
@@ -51,7 +52,9 @@ void Sprite::setClip(int x, int y, int w, int h) {
 
 void Sprite::render(int x, int y) {
     SDL_Rect dstrect = {.x = x, .y = y, .w = clipRect.w, .h = clipRect.h};
-    if (SDL_RenderCopyEx(Game::getInstance().getRenderer(), texture, &clipRect, &dstrect, 0, nullptr, SDL_FLIP_NONE)) {
+    // TODO: Para o zoom, você deve ajustar para a escala as dimensões do retângulo de  destino
+    if (SDL_RenderCopyEx(Game::getInstance().getRenderer(), texture, &clipRect, &dstrect, angleDeg, nullptr,
+                         SDL_FLIP_NONE)) {
         std::cout << SDL_GetError() << std::endl;
     }
 }
@@ -85,8 +88,12 @@ void Sprite::start() {
 }
 
 void Sprite::setScaleX(float scaleX, float scaleY) {
-    if (scaleX != 0 || scaleY != 0) {
+    // TODO: Não  se  esqueça  de  atualizar  a  box  do  GameObject  associated.  Para  facilitar no futuro,
+    //  mova a box dele de forma a manter o centro no mesmo lugar de antes da mudança de escala.
+    if (scaleX != 0) {
         scale.x = scaleX;
+    }
+    if (scaleY != 0) {
         scale.y = scaleY;
     }
 }
