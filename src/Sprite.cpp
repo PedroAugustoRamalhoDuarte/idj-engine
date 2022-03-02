@@ -16,6 +16,7 @@ Sprite::Sprite(GameObject &associated, std::string file) : Component(associated)
     // Changes associated object
     associated.box.w = width;
     associated.box.h = height;
+    setScaleX(1, 1);
 }
 
 Sprite::~Sprite() {
@@ -50,7 +51,7 @@ void Sprite::setClip(int x, int y, int w, int h) {
 
 void Sprite::render(int x, int y) {
     SDL_Rect dstrect = {.x = x, .y = y, .w = clipRect.w, .h = clipRect.h};
-    if (SDL_RenderCopy(Game::getInstance().getRenderer(), texture, &clipRect, &dstrect)) {
+    if (SDL_RenderCopyEx(Game::getInstance().getRenderer(), texture, &clipRect, &dstrect, 0, nullptr, SDL_FLIP_NONE)) {
         std::cout << SDL_GetError() << std::endl;
     }
 }
@@ -61,11 +62,11 @@ void Sprite::render() {
 }
 
 int Sprite::getHeight() {
-    return height;
+    return height * scale.x;
 }
 
 int Sprite::getWidth() {
-    return width;
+    return width * scale.y;
 }
 
 bool Sprite::isOpen() {
@@ -81,5 +82,16 @@ bool Sprite::is(std::string type) {
 
 void Sprite::start() {
 
+}
+
+void Sprite::setScaleX(float scaleX, float scaleY) {
+    if (scaleX != 0 || scaleY != 0) {
+        scale.x = scaleX;
+        scale.y = scaleY;
+    }
+}
+
+Vec2 Sprite::getScale() {
+    return scale;
 }
 

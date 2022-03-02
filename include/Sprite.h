@@ -14,6 +14,7 @@ private:
     int width;
     int height;
     SDL_Rect clipRect;
+    Vec2 scale;
 public:
     explicit Sprite(GameObject &associated);
 
@@ -26,6 +27,10 @@ public:
     void open(std::string file);
 
     void setClip(int x, int y, int w, int h);
+
+    void setScaleX(float scaleX, float scaleY);
+
+    Vec2 getScale();
 
     void render() override;
 
