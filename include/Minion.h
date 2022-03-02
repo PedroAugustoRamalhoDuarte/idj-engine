@@ -11,7 +11,7 @@
 
 class Minion : public Component {
 private:
-    constexpr static float MINION_VEL = PI / 10;
+    constexpr static float MINION_VEL = PI / 100;
     GameObject *alienCenter;
     float arc;
 public:

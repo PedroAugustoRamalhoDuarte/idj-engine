@@ -9,12 +9,17 @@
 #include "Game.h"
 
 void Minion::update(float dt) {
-    // Update rotation
-    Vec2 offset(100, 0);
+    // Default offset
+    Vec2 offset(125, 0);
     Vec2 rotated = offset.rotate(arc);
 
-    associated.box.x = rotated.x + alienCenter->box.x;
-    associated.box.y = rotated.y + alienCenter->box.y;
+    // Rotate minion based on center
+    Vec2 alienMiddle = alienCenter->box.middle();
+    associated.box.x = (rotated.x + alienMiddle.x) - associated.box.h / 2;
+    associated.box.y = (rotated.y + alienMiddle.y) - associated.box.w / 2;
+
+    // Update angle
+    arc += MINION_VEL;
 }
 
 void Minion::render() {
@@ -39,16 +44,6 @@ Minion::Minion(GameObject &associated, GameObject *alienCenter, float arcOffSetD
     // Sprite for minion
     auto sprite = new Sprite(associated, Assets::getImg("minion.png"));
     associated.addComponent(sprite);
-
-    // Position for minion
-//    Vec2 offset(50, 0);
-//    if (this->alienCenter) {
-//        Vec2 initialPosition = offset + this->alienCenter->box.middle();
-//        associated.box.x = initialPosition.x;
-//        associated.box.y = initialPosition.y;
-//    }
-
-
 }
 
 void Minion::shoot(Vec2 target) {
